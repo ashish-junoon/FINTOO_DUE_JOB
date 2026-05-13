@@ -93,9 +93,9 @@ namespace PU_EmiReminder_Due.Common
                         {
                             new LoanDisbursement.Recipient
                             {
-                                NAME = model.customerName,
-                                AMOUNT = model.amount,
-                                DUEDATE = model.dueDate,
+                                //name = model.customerName,
+                                amount = model.amount,
+                                duedate = model.dueDate,
                                 mobiles=$"91{model.MobileNoFor_SMS}"
                             }
                         }

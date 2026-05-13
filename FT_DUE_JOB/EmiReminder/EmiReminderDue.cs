@@ -1,13 +1,9 @@
 ﻿using PU_EmiReminder_Due.Common;
 using PU_EmiReminder_Due.Model;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PU_EmiReminder_Due.EmiReminder
@@ -75,15 +71,12 @@ namespace PU_EmiReminder_Due.EmiReminder
                         emailContentModel.updated_by = System.Environment.MachineName;
                         string body = EmailContentBuilder.GetBody(emailContentModel);
 
-                        Task.Delay(5000).Wait();
+                        
 
                         string mailstatus = EmailSender.SendEMail(emailFrom, emailTo, emailCc, emailBcc, emailPassword, subject, body, null);
                         mailstatus = (mailstatus == "Sent") ? "1" : "0";
-
                         sqlquery += $" exec USP_applicant_maintain_lead_history @lead_id='{emailContentModel.lead_id}',@status=17,@reason='{subject}',@To='{emailTo}',@updated_by='{emailContentModel.updated_by}',@company_id='{emailContentModel.company_id}',@product_name='{emailContentModel.product_name}',@mail_or_sms_flg='{mailstatus}'";
-
                         Task.Delay(5000).Wait();
-
                         await Msg91SmsClass.SendEmiReminderNotificationAsync(emailContentModel);
                     }
 
